@@ -6,6 +6,11 @@ What will be implemented:
 2. Front-end with Thymeleaf
 3. Application tests with Selenium
 
+Features:
+* Simple file storage
+* Note management
+* Credentials management
+
 ## Back-end
 
 1. Managing user access with Spring Security:

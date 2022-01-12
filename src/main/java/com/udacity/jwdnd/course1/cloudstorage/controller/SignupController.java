@@ -1,7 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
-import com.udacity.jwdnd.course1.cloudstorage.services.SignupService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/signup")
 public class SignupController {
 
-    private SignupService signupService;
     private UserService userService;
 
-    public SignupController(SignupService signupService, UserService userService) {
-        this.signupService = signupService;
+    public SignupController(UserService userService) {
         this.userService = userService;
     }
 
@@ -34,7 +31,7 @@ public class SignupController {
         if(!userService.isUsernameAvailable(user.getUsername())) {
             signupError = "Username already being used.";
         } else {
-            int numbersOfUsersAdded = signupService.signup(user);
+            int numbersOfUsersAdded = userService.createUser(user);
             if(numbersOfUsersAdded < 1) {
                 signupError = "Error signing up. Try again.";
             }
