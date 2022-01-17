@@ -77,12 +77,6 @@
                                 <tbody>
                                     <tr th:each="note : ${notes}">
                                         <td>
-
-<!--                                            th:onclick="|getPropId('${var1}','${var2}');|"-->
-<!--                                            th:onclick="'showNoteModal(\''+${note.noteId}+'\',\''+${note.noteTitle}+'\',\''+${note.noteDescription}+'\');'"-->
-<!--                                            th:onclick="|showNoteModal('${note.noteId}', '${note.noteTitle}, '${note.noteDescription}');|"-->
-<!--                                            th:onclick="showNoteModal([[${note.noteId}]], [[${note.noteTitle}]]);"-->
-
                                             <button type="button" class="btn btn-success" th:onclick="showNoteModal([[${note.noteId}]], [[${note.noteTitle}]], [[${note.noteDescription}]]);">Edit</button>
                                             <a class="btn btn-danger" th:href="@{'/notes/delete/'+${note.noteId}}">Delete</a>
                                         </td>
