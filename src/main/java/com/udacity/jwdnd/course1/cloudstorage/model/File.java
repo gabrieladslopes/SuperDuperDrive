@@ -7,9 +7,9 @@ public class File {
     private String contentType;
     private String fileSize;
     private Integer userId;
-    private String fileData;
+    private byte[] fileData;
 
-    public File(Integer fileId, String filename, String contentType, String fileSize, Integer userId, String fileData) {
+    public File(Integer fileId, String filename, String contentType, String fileSize, Integer userId, byte[] fileData) {
         this.fileId = fileId;
         this.filename = filename;
         this.contentType = contentType;
@@ -58,11 +58,23 @@ public class File {
         this.userId = userId;
     }
 
-    public String getFileData() {
+    public byte[] getFileData() {
         return fileData;
     }
 
-    public void setFileData(String fileData) {
+    public void setFileData(byte[] fileData) {
         this.fileData = fileData;
+    }
+
+    @Override
+    public String toString() {
+        return "File{" +
+                "fileId=" + fileId +
+                ", filename='" + filename + '\'' +
+                ", contentType='" + contentType + '\'' +
+                ", fileSize='" + fileSize + '\'' +
+                ", userId=" + userId +
+                ", fileData='" + fileData + '\'' +
+                '}';
     }
 }

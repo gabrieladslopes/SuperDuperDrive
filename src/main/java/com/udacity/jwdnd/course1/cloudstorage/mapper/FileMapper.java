@@ -26,6 +26,6 @@ public interface FileMapper {
             "WHERE filename = #{filenameToUpdate}")
     void update(String filenameToUpdate, File file);
 
-    @Delete("DELETE FROM FILES WHERE fileid = #{fileId}")
-    void delete(String fileId);
+    @Delete("DELETE FROM FILES WHERE fileId = #{fileId}")
+    void delete(Integer fileId);
 }
