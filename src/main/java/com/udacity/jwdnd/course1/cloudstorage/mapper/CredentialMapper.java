@@ -22,10 +22,10 @@ public interface CredentialMapper {
     @Select("SELECT * FROM CREDENTIALS")
     List<Credential> getAllCredentials();
 
-    @Update("UPDATE CREDENTIALS SET url = #{url} AND username = #{username} AND key = #{key}" +
-            "WHERE credentialid = #{credentialIdToUpdate}")
-    void update(Integer credentialIdToUpdate, Credential credential);
+    @Update("UPDATE CREDENTIALS SET url = #{url}, username = #{username}, key = #{key}" +
+            "WHERE credentialid = #{credentialId}")
+    void update(Credential credential);
 
-    @Delete("DELETE FROM CREDENTIALS WHEREE credentialid = #{credentialId}")
+    @Delete("DELETE FROM CREDENTIALS WHERE credentialid = #{credentialId}")
     void delete(Integer credentialId);
 }

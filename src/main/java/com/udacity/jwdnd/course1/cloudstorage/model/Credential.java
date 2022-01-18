@@ -55,4 +55,15 @@ public class Credential {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "Credential{" +
+                "credentialId=" + credentialId +
+                ", url='" + url + '\'' +
+                ", username='" + username + '\'' +
+                ", key='" + key + '\'' +
+                ", userId=" + userId +
+                '}';
+    }
 }
