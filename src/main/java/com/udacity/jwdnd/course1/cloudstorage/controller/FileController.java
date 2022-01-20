@@ -1,15 +1,21 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.ErrorMessage;
 import com.udacity.jwdnd.course1.cloudstorage.model.File;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 @Controller
@@ -25,31 +31,49 @@ public class FileController {
     }
 
     @PostMapping
-    public String addFile(@RequestParam("fileUpload") MultipartFile multipartFile, Authentication authentication, Model model) {
+    public String uploadFile(@RequestParam("fileUpload") MultipartFile multipartFile, Authentication authentication, Model model) {
 
-        System.out.println("add file");
+        System.out.println("upload file");
 
         String username = authentication.getName();
         User user = userService.getUser(username);
         Integer userId = user.getUserId();
 
-        try {
-            InputStream fis = multipartFile.getInputStream();
-            byte[] fileData = new byte[fis.available()];
+        String fileName = multipartFile.getOriginalFilename();
+        File fileWithUsedName = fileService.getFileByFilename(fileName);
 
-            System.out.println(multipartFile.getOriginalFilename());
-            System.out.println(multipartFile.getContentType());
-            System.out.println(multipartFile.getSize());
-            System.out.println(fileData);
+        if(fileWithUsedName != null) {
+            return "redirect:/result?isSuccess=" + false + "&error=" + ErrorMessage.REPEATED_FILENAME;
+        }
+
+        try {
+            byte[] fileData = multipartFile.getBytes();
 
             File file = new File(null, multipartFile.getOriginalFilename(), multipartFile.getContentType(), String.valueOf(multipartFile.getSize()), userId, fileData);
             int rowsInserted = fileService.addFile(file);
-            System.out.println("Rows inserted: " + rowsInserted);
+
+            if(rowsInserted < 1) {
+                return "redirect:/result?isSuccess=" + false;
+            }
+
         } catch(Exception e) {
-            System.out.println(e.getMessage());
+            return "redirect:/result?isSuccess="+false;
         }
 
-        return "redirect:/home";
+        return "redirect:/result?isSuccess="+true;
+    }
+
+    @GetMapping("/download/{fileId}")
+    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("fileId") Integer fileId) {
+        File file = fileService.getFileByFileId(fileId);
+        String fileName = file.getFilename();
+        InputStream inputStream = new ByteArrayInputStream(file.getFileData());
+        InputStreamResource resource = new InputStreamResource(inputStream);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileName)
+                .contentType(MediaType.parseMediaType(file.getContentType()))
+                .body(resource);
     }
 
     @GetMapping("/delete/{fileId}")
