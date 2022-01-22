@@ -37,7 +37,7 @@ public class SignupLoginAccessTest {
     }
 
     @Test
-    public void testRedirectUnauthorizedAccess() throws InterruptedException {
+    public void testRedirectUnauthorizedAccess() {
         driver.get("http://localhost:" + port + "/home");
         assertEquals("http://localhost:" + port + "/login", driver.getCurrentUrl());
 
@@ -49,7 +49,7 @@ public class SignupLoginAccessTest {
     }
 
     @Test
-    public void testSignUpLoginAccess() throws InterruptedException {
+    public void testSignUpLoginAccess() {
         String firstName = "John";
         String lastName = "Robert";
         String username = "john";
