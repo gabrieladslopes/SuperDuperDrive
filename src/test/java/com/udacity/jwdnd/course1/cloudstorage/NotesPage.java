@@ -58,10 +58,10 @@ public class NotesPage {
         List<WebElement> noteTableRows = table.findElements(By.className("noteTableRow"));
 
         for (WebElement noteTableRow : noteTableRows) {
-            WebElement titleElement = noteTableRow.findElement(By.className("idNoteTitle"));
+            WebElement titleElement = noteTableRow.findElement(By.className("classNoteTitle"));
             wait.until(ExpectedConditions.visibilityOf(titleElement));
 
-            WebElement descriptionElement = noteTableRow.findElement(By.className("idNoteDescription"));
+            WebElement descriptionElement = noteTableRow.findElement(By.className("classNoteDescription"));
             wait.until(ExpectedConditions.visibilityOf(descriptionElement));
 
             if(titleElement.getText().equals(title) && descriptionElement.getText().equals(description)) return true;
