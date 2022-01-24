@@ -34,4 +34,5 @@ public class NoteService {
     public void deleteNote(Integer noteId) {
         noteMapper.deleteNote(noteId);
     }
+
 }

@@ -1,5 +1,10 @@
-package com.udacity.jwdnd.course1.cloudstorage;
+package com.udacity.jwdnd.course1.cloudstorage.tests;
 
+import com.udacity.jwdnd.course1.cloudstorage.page_objects.HomePage;
+import com.udacity.jwdnd.course1.cloudstorage.page_objects.LoginPage;
+import com.udacity.jwdnd.course1.cloudstorage.page_objects.NotesPage;
+import com.udacity.jwdnd.course1.cloudstorage.page_objects.SignupPage;
+import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
@@ -11,12 +16,15 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NotesTest {
 
     @LocalServerPort
     private int port;
 
     private WebDriver driver;
+
+    private NoteService noteService;
 
     @BeforeAll
     static void beforeAll() {
@@ -49,6 +57,23 @@ public class NotesTest {
     }
 
     @Test
+    @Order(1)
+    public void testNoteDeletion() {
+
+        String title = "Title test";
+        String description = "Description test";
+
+        NotesPage notesPage = new NotesPage(driver);
+        notesPage.createNewNote(driver, title, description);
+
+        assertTrue(notesPage.noteExists(driver, title, description));
+
+        notesPage.deleteNote(driver);
+        assertFalse(notesPage.noteExists(driver, title, description));
+    }
+
+    @Test
+    @Order(2)
     public void testNoteCreation() {
 
         String title = "Title test 1";
@@ -58,6 +83,7 @@ public class NotesTest {
         notePage.createNewNote(driver, title, description);
 
         assertTrue(notePage.noteExists(driver, title, description));
+        notePage.deleteNote(driver);
 
         title = "Title test 2";
         description = "Description test 2";
@@ -66,9 +92,11 @@ public class NotesTest {
         notePage.createNewNote(driver, title, description);
 
         assertTrue(notePage.noteExists(driver, title, description));
+        notePage.deleteNote(driver);
     }
 
     @Test
+    @Order(3)
     public void testNoteEdition() {
 
         String title = "Title test 1";
@@ -84,21 +112,6 @@ public class NotesTest {
 
         notePage.editNote(driver, newTitle, newDescription);
         assertTrue(notePage.noteExists(driver, newTitle, newDescription));
-    }
-
-    @Test
-    public void testNoteDeletion() {
-
-        String title = "Title test";
-        String description = "Description test";
-
-        NotesPage notesPage = new NotesPage(driver);
-        notesPage.createNewNote(driver, title, description);
-
-        assertTrue(notesPage.noteExists(driver, title, description));
-
-        notesPage.deleteNote(driver, title, description);
-        assertFalse(notesPage.noteExists(driver, title, description));
     }
 }
 

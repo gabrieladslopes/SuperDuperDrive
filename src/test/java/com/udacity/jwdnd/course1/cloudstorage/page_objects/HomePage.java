@@ -1,4 +1,4 @@
-package com.udacity.jwdnd.course1.cloudstorage;
+package com.udacity.jwdnd.course1.cloudstorage.page_objects;
 
 import org.h2.mvstore.Page;
 import org.openqa.selenium.WebDriver;

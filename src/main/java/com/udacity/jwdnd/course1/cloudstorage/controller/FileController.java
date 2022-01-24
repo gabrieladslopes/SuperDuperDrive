@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.naming.SizeLimitExceededException;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
@@ -34,6 +35,7 @@ public class FileController {
     public String uploadFile(@RequestParam("fileUpload") MultipartFile multipartFile, Authentication authentication, Model model) {
 
         System.out.println("upload file");
+        System.out.println(multipartFile.getSize());
 
         String username = authentication.getName();
         User user = userService.getUser(username);
@@ -80,5 +82,10 @@ public class FileController {
     public String deleteFile(@PathVariable("fileId") Integer fileId) {
         fileService.deleteFile(fileId);
         return "redirect:/home";
+    }
+
+    @ExceptionHandler({SizeLimitExceededException.class})
+    public String handleException() {
+        return "redirect:/result?isSuccess="+false;
     }
 }

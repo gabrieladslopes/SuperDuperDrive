@@ -1,4 +1,4 @@
-package com.udacity.jwdnd.course1.cloudstorage;
+package com.udacity.jwdnd.course1.cloudstorage.page_objects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -89,7 +89,7 @@ public class NotesPage {
         this.buttonSaveChanges.click();
     }
 
-    public void deleteNote(WebDriver driver, String title, String description) {
+    public void deleteNote(WebDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver, 1000);
 
         wait.until(ExpectedConditions.elementToBeClickable(notesTab));

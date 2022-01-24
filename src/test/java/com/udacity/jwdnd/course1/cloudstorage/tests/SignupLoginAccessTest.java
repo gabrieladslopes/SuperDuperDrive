@@ -1,5 +1,8 @@
-package com.udacity.jwdnd.course1.cloudstorage;
+package com.udacity.jwdnd.course1.cloudstorage.tests;
 
+import com.udacity.jwdnd.course1.cloudstorage.page_objects.HomePage;
+import com.udacity.jwdnd.course1.cloudstorage.page_objects.LoginPage;
+import com.udacity.jwdnd.course1.cloudstorage.page_objects.SignupPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
