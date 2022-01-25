@@ -4,7 +4,8 @@ public enum ErrorMessage {
     UNKNOWN_ERROR(0, ""),
     MAX_FILESIZE(1, "File is bigger than the max size allowed."),
     REPEATED_FILENAME(2, "File with that name already exists."),
-    BAD_URL(3, "This page doesn't exist.");
+    BAD_URL(3, "This page doesn't exist."),
+    EMPTY_FILE(4, "None file was selected.");
 
     int type;
     String message;

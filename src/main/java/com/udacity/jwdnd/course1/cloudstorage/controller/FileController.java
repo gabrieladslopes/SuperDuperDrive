@@ -34,8 +34,9 @@ public class FileController {
     @PostMapping
     public String uploadFile(@RequestParam("fileUpload") MultipartFile multipartFile, Authentication authentication, Model model) {
 
-        System.out.println("upload file");
-        System.out.println(multipartFile.getSize());
+        if (multipartFile.isEmpty()){
+            return "redirect:/result?isSuccess=" + false + "&error=" + ErrorMessage.EMPTY_FILE;
+        }
 
         String username = authentication.getName();
         User user = userService.getUser(username);
