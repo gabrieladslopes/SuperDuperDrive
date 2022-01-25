@@ -83,9 +83,4 @@ public class FileController {
         fileService.deleteFile(fileId);
         return "redirect:/home";
     }
-
-    @ExceptionHandler({SizeLimitExceededException.class})
-    public String handleException() {
-        return "redirect:/result?isSuccess="+false;
-    }
 }
